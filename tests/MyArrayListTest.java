@@ -11,7 +11,23 @@ public class MyArrayListTest {
 	MyArrayList myArrayList = new MyArrayList();
 	@Test
 	public void testSize() {
-		myArrayList.add(10, 0);
+		fail("size should be 10 when do it");
 	}
+	@Test
+	public void testAdd() {
+		fail("check the last index added");
+	}
+	@Test
+	public void testRemove() {
+		fail("check the index before the index removed");
+	}
+	@Test
+	public void testHasNext() {
+		fail("idk im coming up with random ideas at this point");
+	}
+	
+	// think of some other tests we can do that wouldn't be impossible to do please gents
+	
+	
 
 }
