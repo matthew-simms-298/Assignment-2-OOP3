@@ -1,9 +1,10 @@
 package application;
 
 public class MyDDLNode {
-	public MyDDLNode head;
-	public MyDDLNode tail;
-	private int value;
+
+	int value;
+	MyDDLNode next;
+	MyDDLNode  previous;
 	
 	public MyDDLNode(int value) {
 		this.value = value;

@@ -2,6 +2,7 @@ package ADTs;
 
 // import exceptions.EmptyQueueException;
 import java.io.*;
+import exceptions.*;
 
 /**
  * This is the professional Queue Interface for Advanced Object 
