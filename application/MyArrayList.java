@@ -5,10 +5,11 @@ import ADTs.Iterator;
 import ADTs.ListADT;
 
 
-public class MyArrayList<E> implements ListADT<E> , Iterator{
+public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	
-	public int size = 0;
+	private int size = 0;
 	public Object[] originalArray;
+	private int cursor = 0;
 
 	// ListADT interface  methods:
 	public int size() {
@@ -100,7 +101,7 @@ public class MyArrayList<E> implements ListADT<E> , Iterator{
 		}
 	}
 
-
+	@SuppressWarnings("unchecked")
 	public E get(int index) throws IndexOutOfBoundsException {
 		return (E) originalArray[index];
 		// im gonna ask Khosro about this
@@ -122,7 +123,7 @@ public class MyArrayList<E> implements ListADT<E> , Iterator{
 		return null;
 	}
 
-
+	@SuppressWarnings("unchecked")
 	public Object remove(Object toRemove) throws NullPointerException {
 		try {
 			/** @author Matthew
@@ -151,10 +152,10 @@ public class MyArrayList<E> implements ListADT<E> , Iterator{
 		}
 	}
 
-	
+	@SuppressWarnings("unchecked")
 	public Object set(int index, Object toChange) throws NullPointerException, IndexOutOfBoundsException {
 		try {
-			// hasn't been completed yet
+			originalArray[index] = toChange;
 		}
 		catch (NullPointerException error) {
 			return error.getMessage();
@@ -195,7 +196,7 @@ public class MyArrayList<E> implements ListADT<E> , Iterator{
 		}
 	}
 
-
+	@SuppressWarnings("unchecked")
 	public Object[] toArray(Object[] toHold) throws NullPointerException {
 		try {
 			toHold = originalArray;
@@ -212,24 +213,43 @@ public class MyArrayList<E> implements ListADT<E> , Iterator{
 		return originalArray;
 	}
 
+    public Iterator<E> iterator() {
+        // Anonymous inner class implementing the Iterator interface
+        return new Iterator<E>() {
+            // Cursor to keep track of the current position during iteration
+            private int cursor = 0;
 
-	public Iterator<E> iterator() {
-		// I'm not sure how to use an iterator
-		return null;
-	}
+            @Override
+            public boolean hasNext() {
+                return cursor < size;
+            }
+
+            @Override
+            @SuppressWarnings("unchecked")
+            public E next() {
+                if (hasNext()) {
+                    return (E) originalArray[cursor++];
+                } else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
+    }
 	
 	// Iterator interface Methods:
 
 	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		return cursor < size;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object next() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+	public E next() throws NoSuchElementException {
+                if (hasNext()) {
+                    return (E) originalArray[cursor++];
+                } else {
+                    throw new NoSuchElementException();
+                }
 	}
-
 }

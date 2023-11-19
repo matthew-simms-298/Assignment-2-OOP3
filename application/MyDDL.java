@@ -9,35 +9,73 @@ public class MyDDL {
 	public MyDDL() {
 		size = 0;
 	}
-    public void insertAtHead(int data) {
-        /**
-         * Add a new node to the beginning of the list
-         */
+    public void insertAtHead(Object data) {
+        MyDDLNode newnode = new MyDDLNode(data);
+        if(isEmpty()){
+            head = newnode;
+            tail = newnode;
+        } else {
+            newnode.next = head;
+            newnode.previous = newnode;
+            head = newnode;
+        }
+        size++;
     }
     
-    public void insertAtTail(int data) {
-        /**
-         * Add a new node to the end of the list
-         */
+    public void insertAtTail(Object data) {
+        MyDDLNode newnode = new MyDDLNode(data);
+        if(isEmpty()){
+            head = newnode;
+            tail = newnode;
+        } else {
+            newnode.previous = head;
+            newnode.next = newnode;
+            tail = newnode;
+        }
+        size++;
     }
     
     public void deleteAtHead() {
-        /**
-         * Delete the first node of the list
-         */
-         
+        if(isEmpty()){
+            throw new IllegalStateException("List is empty");
+        }
+        head = head.next;
+        if(head != null){
+            head.previous = null;
+        }else{
+            tail = null;
+        }
+        size--;
     }
     
     public void deleteAtTail() {
-        /**
-         * Delete the last node of the list
-         */
+        if(isEmpty()){
+            throw new IllegalStateException("List is empty");
+        }
+        tail = tail.previous;
+        if(tail != null){
+            tail.previous = null;
+        }else{
+            head = null;
+        }
+        size--;
     }
     
     public void display() {
-        /**
-         * Print Items in the list the list
-         */
+
+        if(isEmpty()){
+            System.out.print("[Empty]");
+        }else{
+            MyDDLNode current = head;
+            while(current != null){
+                System.out.print(current + "->");
+                current = current.next;
+            }
+        }
+    }
+
+    public boolean isEmpty(){
+        return size == 0;
     }
 }
 	

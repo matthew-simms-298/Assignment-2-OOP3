@@ -2,11 +2,11 @@ package application;
 
 public class MyDDLNode {
 
-	int value;
+	Object value;
 	MyDDLNode next;
 	MyDDLNode  previous;
 	
-	public MyDDLNode(int value) {
+	public MyDDLNode(Object value) {
 		this.value = value;
 	}
 }
