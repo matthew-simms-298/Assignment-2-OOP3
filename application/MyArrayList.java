@@ -17,8 +17,7 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	}
 	
 	public void clear() {
-		Object[] newArray = new Object[0];
-		originalArray = newArray;
+		originalArray =  new Object[0];
 		// seems simple enough to me lol
 	}
 
@@ -37,8 +36,7 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 			 *  array we just created so it's not locked behind the method.
 			 */
 			Object[] arrayCopy = originalArray;
-			Object[] newArray = new Object[size() + 1];
-			originalArray = newArray;
+			originalArray = new Object[size() + 1];
 
 			for (int jndex = 0; jndex < originalArray.length - 2; jndex++) {
 				originalArray[jndex] = arrayCopy[jndex];
@@ -61,8 +59,7 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	public boolean add(Object toAdd) throws NullPointerException, IndexOutOfBoundsException {
 		try {
 			Object[] arrayCopy = originalArray;
-			Object[] newArray = new Object[size() + 1];
-			originalArray = newArray;
+			originalArray = new Object[size() + 1];
 
 			for (int index = 0; index < originalArray.length - 2; index++) {
 				originalArray[index] = arrayCopy[index];
@@ -84,8 +81,7 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 		try {
 			int index = 0;
 			Object[] arrayCopy = originalArray;
-			Object[] newArray = new Object[originalArray.length + toAdd.size()];
-			originalArray = newArray;
+			originalArray = new Object[originalArray.length + toAdd.size()];
 
 			for (; index < arrayCopy.length - 1; index++) {
 				originalArray[index] = arrayCopy[index]; 
@@ -101,7 +97,6 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	public E get(int index) throws IndexOutOfBoundsException {
 		return (E) originalArray[index];
 		// im gonna ask Khosro about this
