@@ -99,7 +99,6 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 
 	public E get(int index) throws IndexOutOfBoundsException {
 		return (E) originalArray[index];
-		// im gonna ask Khosro about this
 	}
 
 
@@ -121,23 +120,27 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	@SuppressWarnings("unchecked")
 	public Object remove(Object toRemove) throws NullPointerException {
 		try {
-			/** @author Matthew
-			 *  this is going to cause an error, it calls to remove the first instance.
-			 * however this will make it remove all instances. but looking at
-			 * the array itself it will only remove one index since we only need to get 
-			 * rid of the first instance of that value from @param toRemove
-			 */
+			boolean firstInstanceFound = false;
 			Object savedInstance = 0;
-			Object[] newArray = new Object[originalArray.length - 1];
+			Object[] arrayCopy = originalArray;
+			originalArray = new Object[originalArray.length - 1];
 			
-			for (int index = 0, jndex = 0; index < newArray.length; index++, jndex++) {
-				if (originalArray[index] != toRemove) {
-					newArray[index] = originalArray[jndex];
+			for (int index = 0, jndex = 0; index < originalArray.length; index++, jndex++) {
+				if (arrayCopy[index] != toRemove) {
+					originalArray[index] = arrayCopy[jndex];
 				}
 				else {
-					savedInstance = originalArray[jndex];
-					newArray[index] = originalArray[jndex + 1];
-					jndex++;
+					if (firstInstanceFound == true) {
+						originalArray[index] = arrayCopy[jndex];
+					}
+					else {
+						firstInstanceFound = true;
+						savedInstance = arrayCopy[jndex];
+						
+						originalArray[index] = arrayCopy[jndex + 1];
+						jndex++;
+						
+					}
 				}
 			}
 			return savedInstance;
@@ -175,13 +178,11 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	public boolean contains(Object toFind) throws NullPointerException {
 		try {
 			boolean response = false;
-			for (int index = 0; index < originalArray.length - 1; index++) {
+
+			for (int index = 0; index < originalArray.length; index++) {
 				if (originalArray[index] == toFind) {
 					response = true;
 					break;
-				}
-				else {
-					response = false;
 				}
 			}
 			return response;
