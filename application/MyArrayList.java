@@ -17,7 +17,8 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	}
 	
 	public void clear() {
-		originalArray =  new Object[0];
+		size = 0;
+		originalArray =  new Object[size];
 		// seems simple enough to me lol
 	}
 
@@ -86,23 +87,35 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	}
 
 	public E get(int index) throws IndexOutOfBoundsException {
-		return (E) originalArray[index];
+		try {
+			return (E) originalArray[index];
+		}
+		catch (IndexOutOfBoundsException error) {
+			return null;
+		}
 	}
 
 
 	public E remove(int index) throws IndexOutOfBoundsException {
-		Object[] newArray = new Object[originalArray.length - 1];
-		
-		for (int jndex = 0, kndex = 0; jndex < newArray.length - 1; jndex++, kndex++) {
-			if (jndex != index) {
-				newArray[jndex] = originalArray[kndex]; 
+		try {
+			Object[] newArray = new Object[originalArray.length - 1];
+			Object indexValue = 0;
+			
+			for (int jndex = 0, kndex = 0; jndex < newArray.length - 1; jndex++, kndex++) {
+				if (jndex != index) {
+					newArray[jndex] = originalArray[kndex]; 
+				}
+				else {
+					indexValue = originalArray[kndex];
+					newArray[jndex] = originalArray[kndex + 1];
+					kndex++;
+				}
 			}
-			else {
-				newArray[jndex] = originalArray[kndex + 1];
-				kndex++;
-			}
+			return (E) indexValue;
 		}
-		return null;
+		catch (IndexOutOfBoundsException error) {
+			return null;
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -230,10 +243,11 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 	@SuppressWarnings("unchecked")
 	@Override
 	public E next() throws NoSuchElementException {
-                if (hasNext()) {
-                    return (E) originalArray[cursor++];
-                } else {
-                    throw new NoSuchElementException();
-                }
+		if (hasNext()) {
+			return (E) originalArray[cursor++];
+		} 
+		else {
+			throw new NoSuchElementException();
+		}
 	}
 }

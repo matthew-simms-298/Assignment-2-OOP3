@@ -2,91 +2,168 @@ package application;
 import java.util.EmptyStackException;
 import java.util.NoSuchElementException;
 
+
 import ADTs.*;
 public class MyStack implements StackADT, Iterator {
 
-	@Override
+	private int size = 0;
+	private int cursor = 0;
+	private Object[] originalArray = new Object[size];
+
 	public void push(Object toAdd) throws NullPointerException {
-		// TODO Auto-generated method stub
-		
+		try {
+			Object[] arrayCopy = originalArray;
+			originalArray = new Object[size + 1];
+
+			for (int index = 0; index < size() - 2; index++) {
+				originalArray[index] = arrayCopy[index];
+			}
+
+			originalArray[size() - 1] = toAdd;
+			size++;
+			}
+		catch (NullPointerException error) {
+			System.out.println("ERROR");
+		}
 	}
 
-	@Override
+
 	public Object pop() throws EmptyStackException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			Object poppedValue = 0;
+			Object[] arrayCopy = originalArray;
+			originalArray = new Object[size() - 1];
+
+			for (int index = 0; index < arrayCopy.length - 1; index++) {
+				originalArray[index] = arrayCopy[index];
+			}
+			poppedValue = arrayCopy[size() - 1];
+			return poppedValue;
+		}
+		catch (EmptyStackException error) {
+			return null;
+		}
 	}
 
-	@Override
 	public Object peek() throws EmptyStackException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return originalArray[size() - 1];
+		}
+		catch (EmptyStackException error) {
+			return null;
+		}
 	}
 
-	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
+		size = 0;
+		originalArray = new Object[size()];
 		
 	}
 
-	@Override
+
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		if (size == 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
-	@Override
+
 	public Object[] toArray() {
-		// TODO Auto-generated method stub
-		return null;
+		return originalArray;
 	}
 
-	@Override
+
 	public Object[] toArray(Object[] holder) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			holder = originalArray;
+			return originalArray;
+		}
+		catch (NullPointerException error) {
+			return null;
+		}
 	}
 
-	@Override
+
 	public boolean contains(Object toFind) throws NullPointerException {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			boolean valueExisitence = false;
+			for (int index = 0; index < size() - 1; index++) {
+				if (originalArray[index] == toFind) {
+					valueExisitence = true;
+				}
+				else {
+					valueExisitence = false;
+				}
+			}
+			return valueExisitence;
+		} 
+		catch (NullPointerException error) {
+			return false;
+		}
 	}
 
-	@Override
+
 	public int search(Object toFind) {
-		// TODO Auto-generated method stub
-		return 0;
+		int distance = 1;
+		for (int index = 0; index < size; index++) {
+			if (originalArray[index] != toFind) {
+				distance++;
+			}
+			else {
+				break;
+			}
+		}
+		return distance;
 	}
 
-	@Override
+
 	public Iterator iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		// Anonymous inner class implementing the Iterator interface
+        return new Iterator() {
+            // Cursor to keep track of the current position during iteration
+            private int cursor = 0;
+
+            public boolean hasNext() {
+                return cursor < size;
+            }
+
+            public Object next() {
+                if (hasNext()) {
+                    return originalArray[cursor++];
+                } 
+				else {
+                    throw new NoSuchElementException();
+                }
+            }
+        };
 	}
 
-	@Override
 	public boolean equals(StackADT that) {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.size == that.size()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
-	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 
-	@Override
 	public boolean hasNext() {
-		// TODO Auto-generated method stub
-		return false;
+		return cursor < size;
 	}
 
-	@Override
 	public Object next() throws NoSuchElementException {
-		// TODO Auto-generated method stub
-		return null;
+		if (hasNext()) {
+			return originalArray[cursor++];
+		} else {
+			throw new NoSuchElementException();
+		}
 	}
 
 }

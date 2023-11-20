@@ -8,28 +8,31 @@ import application.MyArrayList;
 
 public class MyArrayListTest {
 	
-	MyArrayList myArrayList = new MyArrayList();
+	public MyArrayList <Object> myArrayList = new MyArrayList();
 	
 	@Test
-	public void testSize() {
-		fail("size should be 10 when do it");
+	public void testSize() {;
+        myArrayList.add(1);
+        myArrayList.add(2);
+        myArrayList.add(3);
+
+		assertEquals(3, myArrayList.size());
 	}
 	@Test
 	public void testAdd() {
-		fail("check the last index added");
-		fail("check the index you added's value and the index value u entered");
+		Object obj = new Object();
+		myArrayList.add(obj);
+		assertEquals(1, myArrayList.size());
+		assertEquals(obj, myArrayList.get(0));
+
 	}
 	@Test
 	public void testRemove() {
-		fail("check the index before the index removed");
+		Object obj = new Object();
+		myArrayList.add(obj);
+		myArrayList.remove(obj);
+		assertEquals(0, myArrayList.size());
 	}
-	@Test
-	public void testHasNext() {
-		fail("idk im coming up with random ideas at this point");
-	}
-	
-	// think of some other tests we can do that wouldn't be impossible to do please gents
-	
 	
 
 }
