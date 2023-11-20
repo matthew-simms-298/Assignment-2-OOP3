@@ -23,18 +23,6 @@ public class MyArrayList<E> implements ListADT<E> , Iterator<E>{
 
 	public boolean add(int index, Object toAdd) throws NullPointerException, IndexOutOfBoundsException {
 		try {
-			/**@author Matthew
-			 *  we need to use arrays, so that means we cant mutate them.
-			 *  thats why we need to use a new array with the size of the og
-			 *  plus one, then we save the data of the og to a copy of it.
-			 *  now going through it we save all the og data to the new one, 
-			 *  leaving the last one empty. this is where we simulate the "add".
-			 *  were gonna save the data of that index first, then override the index data
-			 *  the new data. after that we simply place the saved copy of the data of
-			 *  the index that was selected in the parameter to it. simulating adding a
-			 *  new index to the array. finally we take the array and assign it to the new
-			 *  array we just created so it's not locked behind the method.
-			 */
 			Object[] arrayCopy = originalArray;
 			originalArray = new Object[size() + 1];
 
